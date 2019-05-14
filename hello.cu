@@ -17,12 +17,23 @@ __global__ void cal_loss(float *err, float *label, int n){
 	//}
 }
 
+void init_float(float * arr, int size){
+	for (int i = 0; i < size; ++i)
+	{
+		if(i == 3)
+			arr[i] = 1;
+		else
+			arr[i] = 0;
+	}
+}
+
+
 int main()
 {
 	// host data
 	int size = 10 * sizeof(float);
 	float *label = (float*)malloc(size);
-	label = {0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f};
+	init_float(label, 10);
 	float *err;
     err = (float*)malloc(size);
     label = (float*)malloc(size);
