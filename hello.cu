@@ -5,7 +5,7 @@
 #define BLOCK_SIZE THREADS_PER_BLOCK
 
 // calculation of loss
-__global__ void cal_loss(int *err, int *label, int N) {
+__global__ void cal_loss(float *err, float *label, int n){
 
 	printf("threadIdx:(%d, %d, %d) blockIdx:(%d, %d, %d) blockDim:(%d, %d, %d) "
 	"gridDim:(%d, %d, %d)\n", threadIdx.x, threadIdx.y, threadIdx.z,
@@ -17,7 +17,6 @@ __global__ void cal_loss(int *err, int *label, int N) {
 	//for (int idx = N * pos / totalPos; idx < N * (pos+1) / totalPos; ++idx) { 
 	//	err[idx] = ((Y == idx ? 1.0f : 0.0f) - output[idx]); // calculation of error
 	//}
-	return 0;
 }
 
 int main()
