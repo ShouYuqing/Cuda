@@ -1,7 +1,7 @@
 //Cuda hello world
 #include<stdio.h>
-#define N 60
-#define THREADS_PER_BLOCK 6
+#define N 10
+#define THREADS_PER_BLOCK 1
 #define BLOCK_SIZE THREADS_PER_BLOCK
 
 // calculation of loss
@@ -21,8 +21,8 @@ int main()
 {
 	// host data
 	int size = 10 * sizeof(float);
-	//float *label = [0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f];
 	float *label;
+	label = [0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f];
 	float *err;
     err = (float*)malloc(size);
     label = (float*)malloc(size);
@@ -37,9 +37,6 @@ int main()
     cal_loss <<<N/THREADS_PER_BLOCK, THREADS_PER_BLOCK>>>(d_err, d_label, 10);// kernel function
   
     //cudaMemcpy(out, d_out, size, cudaMemcpyDeviceToHost); // copy the result from GPU to CPU
-
-    //for(int i=0; i<N; i++)
-    //    printf("%i ---i=%i \n", out[i], i);
 
     free(label); free(err);
   
