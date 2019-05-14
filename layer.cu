@@ -21,20 +21,18 @@ Layer::Layer(int kernel_size, int in_size, int out_size, int in_channel, int out
   
 	float *h_bias, *h_weight;
 	// host memory allocation
-	//h_bias = (float *)malloc(sizeof(float) * N);
-	//h_weight = (float *)malloc(sizeof(float) * N * M);
-	cudaMallocHost(&h_bias, sizeof(float) * N);
-	cudaMallocHost(&h_weight, sizeof(float) * N * M);
+	cudaMallocHost(&h_bias, sizeof(float) * N);//(out_channel, 1)
+	cudaMallocHost(&h_weight, sizeof(float) * N * M);//(kernel_size^2*out_channel, 1)
 
 	float *output, *preact, *bias, *weight;
 
-	// initialize weights and bias
+	// initialize weights and bias(in the host)
 	for (int i = 0; i < N; ++i) {
 		h_bias[i] = 0.5f - float(rand()) / float(RAND_MAX);
 		/*h_bias[i] = 0.0f;*/
 
 		for (int j = 0; j < M; ++j) {
-			h_weight[i * N + j] = 0.5f - float(rand()) / float(RAND_MAX);
+			h_weight[i * N + j] = 0.5f - float(rand()) / float(RAND_MAX);//(kernel_size^2*out_channel, 1)
 			/*h_weight[i][j] = 0.05f;*/
 		}
 	}
