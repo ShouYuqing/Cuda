@@ -21,8 +21,7 @@ int main()
 {
 	// host data
 	int size = 10 * sizeof(float);
-	float *label;
-	label = [0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f];
+	float *label = [0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f];
 	float *err;
     err = (float*)malloc(size);
     label = (float*)malloc(size);
