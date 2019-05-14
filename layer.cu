@@ -12,9 +12,11 @@ Layer::Layer(int kernel_size, int in_size, int out_size, int in_channel, int out
 	this->out_size = out_size;
 	this->in_channel = in_channel;
 	this->out_channel = out_channel;
-  
-	int N = in_channel * out_channel;
-	int M = kernel_size * kernel_size * out_size * out_size;
+  	
+	//int N = in_channel * out_channel;
+	int N = out_channel;
+	//int M = kernel_size * kernel_size * out_size * out_size;
+	int M = kernel_size * kernel_size;
 	int O = out_channel * out_size * out_size;
   
 	float *h_bias, *h_weight;
@@ -43,7 +45,7 @@ Layer::Layer(int kernel_size, int in_size, int out_size, int in_channel, int out
 
 	cudaMalloc(&bias, sizeof(float) * N); // biases are identical within the same channel
 
-	cudaMalloc(&weight, sizeof(float) * M * N); // all element position corresponds to a weight
+	cudaMalloc(&weight, sizeof(float) * M * N); // all element position corresponds to a weight(kernel_size * kernel_size * output_channel)
 
 	cudaMalloc(&d_output, sizeof(float) * O);
 	cudaMalloc(&d_preact, sizeof(float) * O);
