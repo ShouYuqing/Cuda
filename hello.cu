@@ -1,16 +1,14 @@
 //Cuda hello world
 #include<stdio.h>
-#define N 10
-#define THREADS_PER_BLOCK 1
+#define N 60
+#define THREADS_PER_BLOCK 6
 #define BLOCK_SIZE THREADS_PER_BLOCK
 
 // calculation of loss
 __global__ void cal_loss(float *err, float *label, int n){
 
-	printf("threadIdx:(%d, %d, %d) blockIdx:(%d, %d, %d) blockDim:(%d, %d, %d) "
-	"gridDim:(%d, %d, %d)\n", threadIdx.x, threadIdx.y, threadIdx.z,
-	blockIdx.x, blockIdx.y, blockIdx.z, blockDim.x, blockDim.y, blockDim.z,
-	gridDim.x,gridDim.y,gridDim.z);
+	printf("threadIdx:(%d) blockIdx:(%d)\n "
+	, threadIdx.x, blockIdx.x);
 	const int pos = blockIdx.x * blockDim.x + threadIdx.x;
 	const int totalPos = blockDim.x * gridDim.x;
 
