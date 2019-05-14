@@ -35,7 +35,7 @@ class Layer {
 	void bp_clear();
 };
 
-
+// global function used for layer operation
 // Utility CUDA kernel functions
 __device__ float step_function(float v);
 __global__ void apply_step_function(float *input, float *output, const int N);

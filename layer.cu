@@ -14,11 +14,12 @@ Layer::Layer(int kernel_size, int in_size, int out_size, int in_channel, int out
 	this->out_channel = out_channel;
   	
 	//int N = in_channel * out_channel;
-	int N = out_channel;
+	this->N = out_channel;
 	//int M = kernel_size * kernel_size * out_size * out_size;
-	int M = kernel_size * kernel_size;
-	int O = out_channel * out_size * out_size;
+	this->M = kernel_size * kernel_size;
+	this->O = out_channel * out_size * out_size;
   
+  	// host memory & weight
 	float *h_bias, *h_weight;
 	// host memory allocation
 	cudaMallocHost(&h_bias, sizeof(float) * N);//(out_channel, 1)
@@ -112,13 +113,16 @@ __global__ void apply_step_function(float *input, float *output, const int N)
 	}
 }
 
+// calculation of loss in parallel 
+// N: size of output(one-hot), for MNIST data, N should be 10
+// Y: the output from the network, for MNIST data, Y should be 0-9
 __global__ void calcLoss(float *err, float *output, unsigned int Y, const int N)
 {
 	const int pos = blockIdx.x * blockDim.x + threadIdx.x;
 	const int totalPos = blockDim.x * gridDim.x;
 
 	for (int idx = N * pos / totalPos; idx < N * (pos+1) / totalPos; ++idx) { 
-		err[idx] = ((Y == idx ? 1.0f : 0.0f) - output[idx]);
+		err[idx] = ((Y == idx ? 1.0f : 0.0f) - output[idx]); // 
 	}
 }
 
