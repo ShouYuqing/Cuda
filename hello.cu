@@ -17,6 +17,7 @@ __global__ void cal_loss(float *err, float *label, int n){
 	//}
 }
 
+// initialize the label array
 void init_float(float * arr, int size){
 	for (int i = 0; i < size; ++i)
 	{
